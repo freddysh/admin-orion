@@ -13,10 +13,10 @@ class Role extends Model
             ->belongsToMany('App\User')
             ->withTimestamps();
     }
-    public function asociacion()
-    {
-        return $this
-            ->belongsToMany('App\Asociacion')
-            ->withTimestamps();
-    }
+    // public function asociacion()
+    // {
+    //     return $this
+    //         ->belongsToMany('App\Asociacion')
+    //         ->withTimestamps();
+    // }
 }

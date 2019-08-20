@@ -28,11 +28,20 @@
                                 @endif
                                 <div class="row">
                                     <div class="form-group col-12">
+                                        <label for="childs">Padre</label>
+                                        <select class="form-control" id="padre" name="padre">
+                                            <option value="0">Padre</option>
+                                            @foreach ($categories as $item)
+                                                <option value="{{ $item->id }}" @if (old('padre')==$item->id) selected @endif>{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-12">
                                         <label for="nombre">Nombre</label>
                                         <input type="text" class="form-control" id="nombre" name="nombre" value="{{ old('nombre') }}" aria-describedby="nombre" placeholder="NOMBRE DE LA CATEGORIA" required>
                                     </div>
                                     <div class="form-group col-6">
-                                        <label for="foto">Foto</label>
+                                        <label for="foto">Foto <span class="text-danger">(300x500px)</span></label>
                                         <input type="file" name="portada" class="form-control">
                                     </div>
 

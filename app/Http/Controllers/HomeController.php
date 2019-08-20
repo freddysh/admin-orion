@@ -35,12 +35,12 @@ class HomeController extends Controller
         // return view('admin.index');
 
         $request->user()->authorizeRoles(['user', 'admin','asociacion']);
-        $departamentos =Departamento::get();
-        $provincias =Provincia::get();
-        $distritos =Distrito::get();
-        $comunidades = Comunidad::get();
+        // $departamentos =Departamento::get();
+        // $provincias =Provincia::get();
+        // $distritos =Distrito::get();
+        // $comunidades = Comunidad::get();
         // return view('admin.index');
-        return view('admin.index',compact('departamentos','provincias','distritos','comunidades'));
+        return view('admin.index');
     }
 
 }

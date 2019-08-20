@@ -41,11 +41,11 @@
   <ul id="menu-content" class="menu-content collapsed menu1 sidebar-nav">
         <li class="sidebar-brand1 sidebar-wrap">
             <a href="#">
-                <img alt="Brand" src="{{asset("images/img/etnias-peru.png")}}" class="w-75">
+                <img alt="Brand" src="{{asset("images/img/orion.jpg")}}" class="w-75">
             </a>
             <a href="#!">
                  <b class="text-primary text-12">
-                    {{Auth::user()->nombre}}
+                    {{Auth::user()->name}}
                 </b>
                 <b class="text-primary  text-13">Eres un(a)
                   @if(Auth::user()->hasRole('admin')){{'Administrador'}}@elseif(Auth::user()->hasRole('asociacion')){{ 'Asociacion' }}@endif

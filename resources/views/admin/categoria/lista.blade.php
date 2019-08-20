@@ -24,6 +24,7 @@
                             <thead >
                                 <tr>
                                     <th>#</th>
+                                    <th>PADRE</th>
                                     <th>NOMBRE</th>
                                     <th>OPERACIONES</th>
                                 </tr>
@@ -35,7 +36,12 @@
                                 @foreach ($categorias as $item)
                                     <tr id="row_lista_comunidades_{{ $item->id }}">
                                         <td>{{ $i }}</td>
-                                        <td>{{ $item->nombre }}</td>
+                                        <td>
+                                            @foreach ($item->childs as $hijos)
+                                                {{ $hijos->name }}
+                                            @endforeach
+                                        </td>
+                                        <td>{{ $item->name }}</td>
                                         <td>
                                             <!-- Button trigger modal -->
                                             <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#categoriaModal_{{ $item->id }}">
@@ -57,7 +63,7 @@
                                                             <div class="row">
                                                                 <div class="form-group col-12">
                                                                     <label for="nombre">Nombre</label>
-                                                                    <input type="text" class="form-control" id="nombre" name="nombre" aria-describedby="nombre" placeholder="Nombre de la comunidad" value="{{ $item->nombre }}">
+                                                                    <input type="text" class="form-control" id="nombre" name="nombre" aria-describedby="nombre" placeholder="Nombre de la comunidad" value="{{ $item->name }}">
                                                                 </div>
 
                                                                     <div class="col-12">
@@ -65,9 +71,9 @@
                                                                         <div class="form-group col-12 text-left">
                                                                             <p><b>Foto</b></p>
 {{--                                                                            @foreach ($item->fotos->where('estado','1') as $foto)--}}
-                                                                                @if (Storage::disk('categorias')->has($item->imagen))
+                                                                                @if (Storage::disk('categorias')->has($item->photo))
                                                                                     <figure class="figure m-3" id="{{ $item->id.'_'.$item->id }}">
-                                                                                        <img src="{{ route('categoria_editar_imagen_path',$item->imagen) }}" class="figure-img rounded" alt="A generic" width="200px" height="200px">
+                                                                                        <img src="{{ route('categoria_editar_imagen_path',$item->photo) }}" class="figure-img rounded" alt="A generic" width="200px" height="200px">
                                                                                         <figcaption class="figure-caption text-right mt-0">
                                                                                             <a href="#!" class="btn btn-danger btn btn-block" onclick="borrar_foto_cliente('{{ $item->id.'_'.$item->id }}')">
                                                                                                 <i class="fas fa-trash-alt"></i>

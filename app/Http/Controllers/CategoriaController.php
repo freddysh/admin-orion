@@ -2,35 +2,37 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Categoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use App\Actividad;
+use App\Category;
 
 class CategoriaController extends Controller
 {
     //
     public function getCategorias(){
-        $categorias =Categoria::get();
-//dd($categorias);
+        $categorias =Category::get();
         return view('admin.categoria.lista',compact('categorias'));
     }
     public function nuevo(){
-        return view('admin.categoria.nuevo');
+        $categories =Category::get();
+        return view('admin.categoria.nuevo',compact('categories'));
     }
     public function store(Request $request){
+        $padre=$request->input('padre');
         $nombre=$request->input('nombre');
         $portada=$request->file('portada');
-        $existencias=Categoria::where('nombre',$nombre)->count();
+        // $state=$request->input('state');
+        $existencias=Category::where('name',$nombre)->count();
 
         if($existencias>0){
             return redirect()->back()->with('error','La categoria ya existe')->withInput();
         }
         else{
-            $categoria=new Categoria();
-            $categoria->nombre=$nombre;
+            $categoria=new Category();
+            $categoria->father_id=$padre;
+            $categoria->name=$nombre;
+            $categoria->state=1;
             $categoria->save();
             if(!empty($portada)){
                 // foreach($fotos as $foto){
@@ -39,7 +41,7 @@ class CategoriaController extends Controller
 //                $comunidadfoto->save();
 //
                 $filename ='foto-'.$categoria->id.'.'.$portada->getClientOriginalExtension();
-                $categoria->imagen=$filename;
+                $categoria->photo=$filename;
 //                $comunidadfoto->estado='1';
                 $categoria->save();
                 Storage::disk('categorias')->put($filename,  File::get($portada));
@@ -58,7 +60,7 @@ class CategoriaController extends Controller
         $portada_f=$request->file('portada_f');
         $portada=$request->input('portada');
         // dd($fotosExistentes);
-        $categoria=Categoria::find($id);
+        $categoria=Category::find($id);
         $categoria->nombre=$nombre;
         $categoria->save();
         // borramos de la db la foto de portada que han sido eliminadas por el usuario
@@ -94,7 +96,7 @@ class CategoriaController extends Controller
         return response($file, 200);
     }
     public function getDelete($id){
-        $categoria=Categoria::find($id);
+        $categoria=Category::find($id);
         $actividades_con_categoria=Actividad::where('categoria',$categoria->nombre)->count('id');
         if($actividades_con_categoria>0){
             return 2;

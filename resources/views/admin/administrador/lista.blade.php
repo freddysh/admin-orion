@@ -26,7 +26,7 @@
                                     <th>#</th>
                                     <th>NOMBRE</th>
                                     <th>CELULAR</th>
-                                    <th>EMAIL</th>                                    
+                                    <th>EMAIL</th>
                                     <th>ESTADO</th>
                                     <th>OPERACIONES</th>
                                 </tr>
@@ -38,13 +38,13 @@
                                 @foreach ($administradores as $item)
                                     <tr id="row_lista_comunidades_{{ $item->id }}">
                                         <td>{{ $i }}</td>
-                                        <td>{{ $item->nombre }}</td>
+                                        <td>{{ $item->name }}</td>
                                         <td>{{ $item->celular }}</td>
                                         <td>{{ $item->email }}</td>
                                         <td>
-                                            @if($item->estado=='1')
+                                            @if($item->state=='1')
                                                 <span class="badge badge-success">Activo</span>
-                                            @elseif($item->estado=='0')
+                                            @elseif($item->state=='0')
                                                 <span class="badge badge-dark">Suspendido</span>
                                             @endif
                                         </td>
@@ -68,7 +68,7 @@
                                                             <div class="row">
                                                                 <div class="form-group col-12">
                                                                     <label for="nombre">Nombre</label>
-                                                                    <input type="text" class="form-control" id="nombre" name="nombre" aria-describedby="nombre" placeholder="Nombre de la comunidad" value="{{ $item->nombre }}">
+                                                                    <input type="text" class="form-control" id="nombre" name="nombre" aria-describedby="nombre" placeholder="Nombre de la comunidad" value="{{ $item->name }}">
                                                                 </div>
                                                                 <div class="form-group col-12">
                                                                         <label for="celular">Celular</label>
@@ -80,20 +80,20 @@
                                                                 </div>
                                                                 <div class="form-group col-6">
                                                                         <label for="password">Password</label>
-                                                                        <input type="password" class="form-control" id="password" name="password" aria-describedby="password" placeholder="password" value="{{ $item->password_2 }}">
+                                                                        <input type="password" class="form-control" id="password" name="password" aria-describedby="password" placeholder="password" value="{{ $item->password2 }}">
                                                                 </div>
                                                                 <div class="form-group col-6">
                                                                         <label for="password_2">Re-password</label>
-                                                                        <input type="password" class="form-control" id="password_2" name="re_password" aria-describedby="password" placeholder="password" value="{{ $item->password_2 }}">
+                                                                        <input type="password" class="form-control" id="password_2" name="re_password" aria-describedby="password" placeholder="password" value="{{ $item->password2 }}">
                                                                 </div>
                                                                 <div class="form-group col-3">
                                                                     <label for="email">
-                                                                    <input type="radio" class="form-control" id="estado_1" name="estado" value="1" @if($item->estado=='1'){{'checked="checked"'}}@endif>
+                                                                    <input type="radio" class="form-control" id="estado_1" name="estado" value="1" @if($item->state=='1'){{'checked="checked"'}}@endif>
                                                                     Activo</label>
                                                                 </div>
                                                                 <div class="form-group col-3">
                                                                     <label for="email">
-                                                                    <input type="radio" class="form-control" id="estado_0" name="estado" value="0"  @if($item->estado=='0'){{'checked="checked"'}}@endif>
+                                                                    <input type="radio" class="form-control" id="estado_0" name="estado" value="0"  @if($item->state=='0'){{'checked="checked"'}}@endif>
                                                                     Suspendido</label>
                                                                 </div>
                                                             </div>

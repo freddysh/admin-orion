@@ -16,7 +16,7 @@ class CreateCategoriesTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name',100)->comment('nombre de la categoria');
-            $table->string('photo',200)->comment('foto de la categoria');
+            $table->string('photo',200)->nullable()->comment('foto de la categoria');
             $table->integer('father_id')->default('0')->comment('padre al que pertenece');
             $table->integer('state')->default('1')->comment('estado de la categoria 0:oculto,1:mostrar');
             $table->timestamps();

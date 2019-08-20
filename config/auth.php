@@ -15,9 +15,9 @@ return [
 
     'defaults' => [
         'guard' => 'web',
-        // 'passwords' => 'users',
-        'passwords' => 'asociacion',
-        
+        'passwords' => 'users',
+        // 'passwords' => 'asociacion',
+
     ],
 
     /*
@@ -40,14 +40,14 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            // 'provider' => 'users',
-            'provider' => 'asociacion',
+            'provider' => 'users',
+            // 'provider' => 'asociacion',
         ],
 
         'api' => [
             'driver' => 'token',
-            // 'provider' => 'users',
-            'provider' => 'asociacion',
+            'provider' => 'users',
+            // 'provider' => 'asociacion',
         ],
     ],
 
@@ -69,10 +69,10 @@ return [
     */
 
     'providers' => [
-        'asociacion' => [
+        'users' => [
             'driver' => 'eloquent',
-            // 'model' => App\User::class,
-            'model' => App\Asociacion::class,
+            'model' => App\User::class,
+            // 'model' => App\Asociacion::class,
         ],
 
         // 'users' => [
@@ -97,16 +97,16 @@ return [
     */
 
     'passwords' => [
-        // 'users' => [
-        //     'provider' => 'users',
-        //     'table' => 'password_resets',
-        //     'expire' => 60,
-        // ],
-        'asociacion' => [
-            'provider' => 'asociacion',
+        'users' => [
+            'provider' => 'users',
             'table' => 'password_resets',
             'expire' => 60,
         ],
+        // 'asociacion' => [
+        //     'provider' => 'asociacion',
+        //     'table' => 'password_resets',
+        //     'expire' => 60,
+        // ],
     ],
 
 ];
