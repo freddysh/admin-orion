@@ -37,9 +37,11 @@
                                     <tr id="row_lista_comunidades_{{ $item->id }}">
                                         <td>{{ $i }}</td>
                                         <td>
-                                            @foreach ($item->childs as $hijos)
-                                                {{ $hijos->name }}
-                                            @endforeach
+                                            @if ($item->father_id==0)
+                                                PADRE
+                                            @else
+                                                {{ $categorias->where('id',$item->father_id)->first()->name}}
+                                            @endif
                                         </td>
                                         <td>{{ $item->name }}</td>
                                         <td>
@@ -61,6 +63,15 @@
                                                         </div>
                                                         <div class="modal-body">
                                                             <div class="row">
+                                                                <div class="form-group col-12">
+                                                                    <label for="childs">Padre</label>
+                                                                    <select class="form-control" id="padre" name="padre">
+                                                                        <option value="0">Padre</option>
+                                                                        @foreach ($categorias as $item_)
+                                                                            <option value="{{ $item_->id }}" @if($item_->id==$item->father_id) {{ 'selected' }} @endif>{{ $item_->name }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
                                                                 <div class="form-group col-12">
                                                                     <label for="nombre">Nombre</label>
                                                                     <input type="text" class="form-control" id="nombre" name="nombre" aria-describedby="nombre" placeholder="Nombre de la comunidad" value="{{ $item->name }}">

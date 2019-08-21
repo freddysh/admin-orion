@@ -75,7 +75,6 @@ Route::post('/admin/categoria/nuevo', [
     'uses' => 'CategoriaController@store',
     'as' => 'categoria_store_path',
 ]);
-
 Route::post('/admin/categoria/editar', [
     'uses' => 'CategoriaController@editar',
     'as' => 'categoria_editar_path',
@@ -88,6 +87,79 @@ Route::get('/admin/categoria/delete/{id}', [
     'uses' => 'CategoriaController@getDelete',
     'as' => 'categoria.lista.delete',
 ]);
+// rutas para marcas
+Route::get('/admin/marca/lista', [
+    'uses' => 'BrandController@getMarca',
+    'as' => 'marca_lista_path',
+]);
+Route::get('/admin/marca/nuevo', [
+    'uses' => 'BrandController@nuevo',
+    'as' => 'marca_nuevo_path',
+]);
+Route::post('/admin/marca/nuevo', [
+    'uses' => 'BrandController@store',
+    'as' => 'marca_store_path',
+]);
+Route::post('/admin/marca/editar', [
+    'uses' => 'BrandController@editar',
+    'as' => 'marca_editar_path',
+]);
+Route::get('/admin/marca/editar/imagen/{filename}', [
+    'uses' => 'BrandController@getFoto',
+    'as' => 'marca_editar_imagen_path',
+]);
+Route::get('/admin/marca/delete/{id}', [
+    'uses' => 'BrandController@getDelete',
+    'as' => 'marca.lista.delete',
+]);
+// rutas para productos
+Route::get('/admin/producto/lista', [
+    'uses' => 'ProductController@getProduct',
+    'as' => 'product_lista_path',
+]);
+Route::get('/admin/producto/nuevo', [
+    'uses' => 'ProductController@nuevo',
+    'as' => 'product_nuevo_path',
+]);
+Route::post('/admin/producto/nuevo', [
+    'uses' => 'ProductController@store',
+    'as' => 'product_store_path',
+]);
+
+Route::post('admin/{servicio}/mostrar-provincias', [
+    'uses' => 'ProductController@mostrarProvincias',
+    'as' => 'product_mostrar_provincias_path',
+]);
+Route::post('admin/{servicio}/mostrar-distritos', [
+    'uses' => 'ProductController@mostrarDistritos',
+    'as' => 'product_mostrar_distritos_path',
+]);
+Route::post('/admin/producto/editar', [
+    'uses' => 'ProductController@editar',
+    'as' => 'product_editar_path',
+]);
+Route::get('/admin/producto/editar/imagen/{filename}', [
+    'uses' => 'ProductController@getFoto',
+    'as' => 'product_editar_imagen_path',
+]);
+Route::get('/admin/producto/delete/{id}', [
+    'uses' => 'ProductController@getDelete',
+    'as' => 'product.lista.delete',
+]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -273,30 +345,30 @@ Route::get('/admin/proveedor/delete/{id}/{tipo}', [
     'as' => 'proveedor.delete',
 ]);
 // rutas para productos
-Route::get('/admin/producto/lista', [
-    'uses' => 'ProductosController@lista',
-    'as' => 'producto.lista',
-]);
-Route::get('/admin/producto/nuevo/{categoria}', [
-    'uses' => 'ProductosController@nuevo',
-    'as' => 'producto.nuevo',
-]);
-Route::post('/admin/producto/mostrar-proveedores', [
-    'uses' => 'ProductosController@mostrar_proveedores',
-    'as' => 'mostrar.proveedores.nuevo',
-]);
-Route::post('/admin/producto/nuevo', [
-    'uses' => 'ProductosController@store',
-    'as' => 'producto.store',
-]);
-Route::post('/admin/producto/editar', [
-    'uses' => 'ProductosController@editar',
-    'as' => 'producto.editar',
-]);
-Route::get('/admin/producto/delete/{id}/{categoria}', [
-    'uses' => 'ProductosController@getDelete',
-    'as' => 'producto.delete',
-]);
+// Route::get('/admin/producto/lista', [
+//     'uses' => 'ProductosController@lista',
+//     'as' => 'producto.lista',
+// ]);
+// Route::get('/admin/producto/nuevo/{categoria}', [
+//     'uses' => 'ProductosController@nuevo',
+//     'as' => 'producto.nuevo',
+// ]);
+// Route::post('/admin/producto/mostrar-proveedores', [
+//     'uses' => 'ProductosController@mostrar_proveedores',
+//     'as' => 'mostrar.proveedores.nuevo',
+// ]);
+// Route::post('/admin/producto/nuevo', [
+//     'uses' => 'ProductosController@store',
+//     'as' => 'producto.store',
+// ]);
+// Route::post('/admin/producto/editar', [
+//     'uses' => 'ProductosController@editar',
+//     'as' => 'producto.editar',
+// ]);
+// Route::get('/admin/producto/delete/{id}/{categoria}', [
+//     'uses' => 'ProductosController@getDelete',
+//     'as' => 'producto.delete',
+// ]);
 
 // rutas poara operaciones
 Route::get('/admin/operaciones/{f1}/{f2}', [

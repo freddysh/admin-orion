@@ -1616,6 +1616,57 @@ console.log(foto.length);
         }
       })
 }
+function eliminar_marca(id){
+
+    Swal.fire({
+        title: 'MENSAJE DEL SISTEMA',
+        text: "¿Estas seguro de borrar la marca?",
+        type: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, borrar!',
+        cancelButtonText:'No, cancelar'
+      }).then((result) => {
+        if (result.value) {
+            $.ajaxSetup({
+                headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type:'get',
+                url:'/admin/marca/delete/'+id,
+                // data:{id:id},
+                success:function(data){
+                    console.log('data:'+data);
+                    if(data==1){
+                        Swal.fire(
+                            'Borrado!',
+                            'La marca ha sido borrada.',
+                            'success'
+                        );
+                        $('#row_lista_marcas_'+id).remove();
+                    }
+                    else if(data==2){
+                        Swal.fire(
+                            'Avertencia!',
+                            'La marca tiene productos relacionados, modifique o borre los productos que tengan esta marca.',
+                            'danger'
+                        )
+                    }
+                    else if(data==0){
+                        Swal.fire(
+                            'Error!',
+                            'Hubo un error al borrar la marca.',
+                            'danger'
+                        )
+                    }
+                }
+             });
+        }
+      })
+}
 function buscar_reserva_encuesta(valorcito){
 console.log(valorcito);
     $.ajaxSetup({

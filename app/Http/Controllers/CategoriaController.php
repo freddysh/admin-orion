@@ -6,12 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use App\Category;
+use App\Product;
 
 class CategoriaController extends Controller
 {
     //
     public function getCategorias(){
-        $categorias =Category::get();
+        $categorias =Category::all();
         return view('admin.categoria.lista',compact('categorias'));
     }
     public function nuevo(){
@@ -55,18 +56,22 @@ class CategoriaController extends Controller
     }
 
     public function editar(Request $request){
+        $padre=$request->input('padre');
         $nombre=$request->input('nombre');
         $id=$request->input('id');
         $portada_f=$request->file('portada_f');
         $portada=$request->input('portada');
         // dd($fotosExistentes);
+
         $categoria=Category::find($id);
-        $categoria->nombre=$nombre;
+        $categoria->name=$nombre;
+        $categoria->father_id=$padre;
+        $categoria->state=1;
         $categoria->save();
         // borramos de la db la foto de portada que han sido eliminadas por el usuario
         if(!isset($portada)){
             // $fotos_existentes=ComunidadFoto::where('comunidad_id',$comunidad->id)->where('estado','1')->get();
-            $categoria->imagen='';
+            $categoria->photo='';
             $categoria->save();
         }
         // else{
@@ -81,7 +86,7 @@ class CategoriaController extends Controller
             // $comunidadfoto->save();
 
             $filename ='foto-'.$categoria->id.'.'.$portada_f->getClientOriginalExtension();
-            $categoria->imagen=$filename;
+            $categoria->photo=$filename;
             // $comunidadfoto->estado='1';
             $categoria->save();
             Storage::disk('categorias')->put($filename,  File::get($portada_f));
@@ -96,13 +101,13 @@ class CategoriaController extends Controller
         return response($file, 200);
     }
     public function getDelete($id){
-        $categoria=Category::find($id);
-        $actividades_con_categoria=Actividad::where('categoria',$categoria->nombre)->count('id');
-        if($actividades_con_categoria>0){
+        $category=Category::find($id);
+        $products=Product::where('category_id',$id)->count('id');
+        if($products>0){
             return 2;
         }
         else{
-            if($categoria->delete())
+            if($category->delete())
                 return 1;
             else
                 return 0;

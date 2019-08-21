@@ -61,11 +61,11 @@
     <ul class="sub-menu collapse menu2 @if(
       (url()->current()==route('administrador_lista_path')||url()->current()==route('administrador_nuevo_path'))||
       (url()->current()==route('categoria_lista_path')||url()->current()==route('categoria_nuevo_path'))||
-      (url()->current()==route('comunidad_lista_path')||url()->current()==route('comunidad_nuevo_path'))||
+      (url()->current()==route('marca_lista_path')||url()->current()==route('marca_nuevo_path'))||
+      (url()->current()==route('product_lista_path')||url()->current()==route('product_nuevo_path'))||
       (url()->current()==route('asociacion.lista')||url()->current()==route('asociacion.nuevo'))||
       (url()->current()==route('servicios.nuevo',[$asociacion_id])||url()->current()==route('servicios.lista',[$asociacion_id]))||
       (url()->current()==route('proveedor.nuevo',[$categoria])||url()->current()==route('proveedor.lista'))||
-      (url()->current()==route('producto.nuevo',[$categoria])||url()->current()==route('producto.lista'))||
       (url()->current()==route('solucitudes.asociacion.lista')||url()->current()==route('solucitudes.otros.lista'))
       ) show @endif" id="operaciones">
       <li data-toggle="collapse" class="active1">
@@ -76,7 +76,10 @@
         <a class="@if(url()->current()==route('categoria_lista_path')||url()->current()==route('categoria_nuevo_path')) active @endif" href="{{route('categoria_lista_path')}}">CATEGORIAS</a>
       </li>
       <li data-toggle="collapse" class="active1">
-        <a class="@if(url()->current()==route('comunidad_lista_path')||url()->current()==route('comunidad_nuevo_path')) active @endif" href="{{route('comunidad_lista_path')}}">COMUNIDADES</a>
+        <a class="@if(url()->current()==route('marca_lista_path')||url()->current()==route('marca_nuevo_path')) active @endif" href="{{route('marca_lista_path')}}">MARCAS</a>
+      </li>
+      <li data-toggle="collapse" class="active1">
+        <a class="@if(url()->current()==route('product_lista_path')||url()->current()==route('product_nuevo_path')) active @endif" href="{{route('product_lista_path')}}">PRODUCTOS</a>
       </li>
       <li data-toggle="collapse" class="active1">
         <a class="@if(url()->current()==route('asociacion.lista')||url()->current()==route('asociacion.nuevo') || url()->current()==route('servicios.nuevo',[$asociacion_id])||url()->current()==route('servicios.lista',[$asociacion_id])) active @endif" href="{{route('asociacion.lista')}}"> ASOCIACIONES</a>
@@ -88,10 +91,6 @@
       <li data-toggle="collapse" class="active1">
         <a class="@if(url()->current()==route('proveedor.nuevo',[$categoria])||url()->current()==route('proveedor.lista')) active @endif" href="{{route('proveedor.lista')}}">PROVEEDORES</a>
       </li>
-      <li data-toggle="collapse" class="active1">
-        <a class="@if(url()->current()==route('producto.nuevo',[$categoria])||url()->current()==route('producto.lista')) active @endif" href="{{route('producto.lista')}}">PRODUCTOS</a>
-      </li>
-      <hr>
       <li data-toggle="collapse" class="active1">
         <a class="@if(url()->current()==route('solucitudes.asociacion.lista')) active @endif" href="{{route('solucitudes.asociacion.lista')}}">SOLICITUDES ASOCIACIONES</a>
       </li>
