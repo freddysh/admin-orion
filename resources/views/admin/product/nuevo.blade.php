@@ -1,7 +1,7 @@
 @extends('layouts.app-admin')
 @section('breadcrumb')
 <li class="breadcrumb-item"><a href="#">BASE DE DATOS</a></li>
-<li class="breadcrumb-item"><a href="{{ route('comunidad_lista_path') }}">PRODUCTOS</a></li>
+<li class="breadcrumb-item"><a href="{{ route('product_lista_path') }}">PRODUCTOS</a></li>
 <li class="breadcrumb-item active" aria-current="page">NUEVO</li>
 @endsection
 
@@ -27,44 +27,56 @@
                                     </div>
                                 @endif
                                 <div class="row">
-                                    <div class="form-group col-12">
+                                    <div class="form-group col-6">
                                         <label for="marca">Marca</label>
                                         <select class="form-control" id="marca" name="marca">
-                                            @foreach ($brands->sortBy('name') as $item)
+                                            @foreach ($brands->sortBy('state','1')->sortBy('name') as $item)
                                                 <option value="{{ $item->id }}" @if(old('marca')== $item->name){{ 'selected' }}@endif >{{ $item->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="form-group col-12">
+                                    <div class="form-group col-6">
+                                        <label for="categoria">Categoria</label>
+                                        <select class="form-control" id="categoria" name="categoria">
+                                            @foreach ($categories->sortBy('state','1')->sortBy('name') as $item)
+                                                <option value="{{ $item->id }}" @if(old('categoria')== $item->name){{ 'selected' }}@endif >{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="codigo">Codigo</label>
+                                        <input type="text" class="form-control" id="codigo" name="codigo" value="{{ old('codigo') }}" aria-describedby="codigo" placeholder="Codigo" required>
+                                    </div>
+                                    <div class="form-group col-6">
                                         <label for="nombre">Nombre</label>
-                                        <input type="text" class="form-control" id="nombre" name="nombre" value="{{ old('nombre') }}" aria-describedby="nombre" placeholder="COMUNIDAD DE ..." required>
-                                    </div>
-                                    <div class="form-group col-6">
-                                        <label for="altura">Altura</label>
-                                        <input type="text" class="form-control" id="altura" name="altura" value="{{ old('altura') }}" aria-describedby="altura" placeholder="3420 msnm" required>
-                                    </div>
-                                    <div class="form-group col-6">
-                                        <label for="distancia">Distancia</label>
-                                        <input type="text" class="form-control" id="distancia" name="distancia" value="{{ old('distancia') }}" aria-describedby="distancia" placeholder="2 horas de la ciudad del Cusco" required>
+                                        <input type="text" class="form-control" id="nombre" name="nombre" value="{{ old('nombre') }}" aria-describedby="nombre" placeholder="Nombre" required>
                                     </div>
                                     <div class="form-group col-12">
                                         <label for="descripcion">Descripcion</label>
                                         <textarea  id="basic-example" class="form-control descripcion" name="descripcion" id="descripcion" cols="30" rows="10">{{ old('descripcion') }}</textarea>
                                     </div>
                                     <div class="form-group col-12">
-                                        <label for="historia">Historia</label>
-                                        <textarea class="form-control descripcion" name="historia" id="historia" cols="30" rows="10">{{ old('historia') }}</textarea>
+                                        <label for="detalle">Detalle</label>
+                                        <textarea class="form-control descripcion" name="detalle" id="detalle" cols="30" rows="10">{{ old('detalle') }}</textarea>
                                     </div>
                                     <div class="form-group col-6">
-                                        <label for="foto">Portada</label>
+                                        <label for="precio">Precio regular</label>
+                                        <input type="number" step="0.01" min="0" class="form-control" id="precio" name="precio" value="{{ old('precio') }}" aria-describedby="precio" required>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="precio_online">Precio online</label>
+                                        <input type="number" step="0.01" min="0" class="form-control" id="precio_online" name="precio_online" value="{{ old('precio_online') }}" aria-describedby="precio online" required>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="foto">Portada <span class="text-primary">(150x150px)</span></label>
                                         <input type="file" name="portada" class="form-control">
                                     </div>
-                                    <div class="form-group col-6">
+                                    <div class="form-group col-6 d-none">
                                         <label for="miniatura">Miniatura</label>
                                         <input type="file" name="miniatura" class="form-control">
                                     </div>
                                     <div class="form-group col-12">
-                                        <label for="foto">Galeria de fotos</label>
+                                        <label for="foto">Galeria de fotos<span class="text-primary">(300x300px)</span></label>
                                         <input type="file" name="foto[]" multiple class="form-control">
                                     </div>
                                 </div>

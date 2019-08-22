@@ -20,12 +20,16 @@
                         </div>
                     </div>
                     <div class="col-12 mt-2">
-                        <table class="table table-bordered table-hover table-striped">
+                        <table class="table table-bordered table-hover table-striped table-sm text-12">
                             <thead >
                                 <tr>
                                     <th>#</th>
-                                    <th>LOCALIZACION</th>
+                                    <th>MARCA</th>
+                                    <th>CATEGORIA</th>
+                                    <th>CODIGO</th>
                                     <th>NOMBRE</th>
+                                    <th>PRECIO REGULAR</th>
+                                    <th>PRECIO ONLINE</th>
                                     <th>MOSTRAR EN PAGINA</th>
                                     <th>OPERACIONES</th>
                                 </tr>
@@ -37,16 +41,18 @@
                                 @foreach ($products as $item)
                                     <tr id="row_lista_productos_{{ $item->id }}">
                                         <td>{{ $i }}</td>
-                                        <td>
-                                            {{ $item->distrito->distrito }}
-                                        </td>
-                                        <td>{{ $item->nombre }}</td>
+                                        <td>{{ $item->brand->name }}</td>
+                                        <td>{{ $item->category->name }}</td>
+                                        <td>{{ $item->code }}</td>
+                                        <td>{{ $item->name }}</td>
+                                        <td class="text-right"><sup>S/.</sup>{{ $item->price }}</td>
+                                        <td class="text-right"><sup>S/.</sup>{{ $item->price_promo }}</td>
                                         <td>
                                             <input type="hidden" id="mostrar_en_pagina_{{ $item->id }}" value="{{ $item->mostrar_en_pagina }}">
-                                            @if ($item->mostrar_en_pagina==1)
-                                                <button class="btn btn-success btn-sm" id="confirmar_{{ $item->id }}" onclick="mostrar_pagina('{{ $item->id }}',$('#mostrar_en_pagina_{{ $item->id }}').val())">Mostrar en pagina</button>
-                                            @elseif($item->mostrar_en_pagina==0)
-                                                <button class="btn btn-danger btn-sm" id="confirmar_{{ $item->id }}" onclick="mostrar_pagina('{{ $item->id }}',$('#mostrar_en_pagina_{{ $item->id }}').val())">No mostrar en pagina</button>
+                                            @if ($item->state==1)
+                                                <button class="btn btn-success btn-sm" id="confirmar_{{ $item->id }}" onclick="mostrar_pagina('{{ $item->id }}',$('#mostrar_en_pagina_{{ $item->id }}').val())"><i class="fas fa-eye"></i></button>
+                                            @elseif($item->state==0)
+                                                <button class="btn btn-danger btn-sm" id="confirmar_{{ $item->id }}" onclick="mostrar_pagina('{{ $item->id }}',$('#mostrar_en_pagina_{{ $item->id }}').val())"><i class="fas fa-eye-slash"></i></button>
                                             @endif
                                         </td>
                                         <td>
@@ -58,7 +64,7 @@
                                             <!-- Modal -->
                                             <div class="modal fade" id="comunidadModal_{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-lg" role="document">
-                                                <form action="{{ route('comunidad_editar_path') }}" method="POST" method="POST" enctype="multipart/form-data">
+                                                <form action="{{ route('product_editar_path') }}" method="POST" method="POST" enctype="multipart/form-data">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <h5 class="modal-title" id="exampleModalLabel">Editar datos</h5>
@@ -68,67 +74,54 @@
                                                         </div>
                                                         <div class="modal-body">
                                                             <div class="row">
-                                                                <div class="form-group col-12">
+                                                                <div class="form-group col-6">
+                                                                    <label for="marca">Marca</label>
+                                                                    <select class="form-control" id="marca" name="marca">
+                                                                        @foreach ($brands->sortBy('state','1')->sortBy('name') as $item_)
+                                                                            <option value="{{ $item_->id }}" @if($item->brand_id== $item_->id){{ 'selected' }}@endif >{{ $item_->name }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group col-6">
+                                                                    <label for="categoria">Categoria</label>
+                                                                    <select class="form-control" id="categoria" name="categoria">
+                                                                        @foreach ($categories->sortBy('state','1')->sortBy('name') as $item_)
+                                                                            <option value="{{ $item_->id }}" @if($item->category_id== $item->name){{ 'selected' }}@endif >{{ $item_->name }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group col-6">
+                                                                    <label for="codigo">Codigo</label>
+                                                                    <input type="text" class="form-control" id="codigo" name="codigo" value="{{ $item->code }}" aria-describedby="codigo" placeholder="Codigo" required>
+                                                                </div>
+                                                                <div class="form-group col-6">
                                                                     <label for="nombre">Nombre</label>
-                                                                    <input type="text" class="form-control" id="nombre" name="nombre" aria-describedby="nombre" placeholder="Nombre de la comunidad" value="{{ $item->nombre }}">
-                                                                </div>
-                                                                <div class="form-group col-4">
-                                                                    <label for="departamento">Departamento</label>
-                                                                    <select class="form-control" name="departamento" id="departamento" onchange="mostrar_provincias($(this).val());">
-                                                                        <option value="0">Escoja una opcion</option>
-                                                                        @foreach ($departamentos as $item_)
-                                                                            <option value="{{ $item_->id }}" @if ($item_->id==$item->distrito->provincia->departamento->id)
-                                                                                selected
-                                                                            @endif>{{ $item_->departamento }}</option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
-                                                                <div class="form-group col-4">
-                                                                    <label for="provincia">Provicia</label>
-                                                                    <select class="form-control" name="provincia" id="provincia" onchange="mostrar_distritos($(this).val());">
-                                                                        <option value="0">Escoja una opcion</option>
-                                                                        @foreach ($provincias as $item_)
-                                                                            <option value="{{ $item_->id }}" @if ($item_->id==$item->distrito->provincia->id)
-                                                                                selected
-                                                                            @endif>{{ $item_->provincia }}</option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
-                                                                <div id="distrito_id" class="form-group col-4">
-                                                                    <label for="distrito">Distrito</label>
-                                                                    <select class="form-control" name="distrito" id="distrito">
-                                                                        <option value="0">Escoja una opcion</option>
-                                                                        @foreach ($distritos as $item_)
-                                                                            <option value="{{ $item_->id }}" @if ($item_->id==$item->distrito->id)
-                                                                                selected
-                                                                            @endif>{{ $item_->distrito }}</option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
-                                                                <div class="form-group col-6">
-                                                                        <label for="altura">Altura</label>
-                                                                        <input type="text" class="form-control" id="altura" name="altura" value="{{$item->altura}}" aria-describedby="altura" placeholder="3420 msnm" required>
-                                                                </div>
-                                                                <div class="form-group col-6">
-                                                                    <label for="distancia">Distancia</label>
-                                                                    <input type="text" class="form-control" id="distancia" name="distancia" value="{{$item->distancia}}" aria-describedby="distancia" placeholder="2 horas de la ciudad del Cusco" required>
+                                                                    <input type="text" class="form-control" id="nombre" name="nombre" aria-describedby="nombre" placeholder="Nombre" value="{{ $item->name }}">
                                                                 </div>
                                                                 <div class="form-group col-12">
                                                                     <label for="descripcion">Descripcion</label>
-                                                                    <textarea class="form-control descripcion" name="descripcion" id="descripcion" cols="30" rows="10">{{ $item->descripcion }}</textarea>
+                                                                    <textarea class="form-control descripcion" name="descripcion" id="descripcion" cols="30" rows="10">{{ $item->description }}</textarea>
                                                                 </div>
                                                                 <div class="form-group col-12">
-                                                                    <label for="historia">Historia</label>
-                                                                    <textarea class="form-control descripcion" name="historia" id="historia" cols="30" rows="10">{{ $item->historia }}</textarea>
+                                                                    <label for="detalle">Detalle</label>
+                                                                    <textarea class="form-control descripcion" name="detalle" id="detalle" cols="30" rows="10">{{ $item->detail }}</textarea>
+                                                                </div>
+                                                                <div class="form-group col-6">
+                                                                    <label for="precio">Precio regular</label>
+                                                                    <input type="number" step="0.01" min="0" class="form-control" id="precio" name="precio" value="{{ $item->price }}" aria-describedby="precio" required>
+                                                                </div>
+                                                                <div class="form-group col-6">
+                                                                    <label for="precio_online">Precio online</label>
+                                                                    <input type="number" step="0.01" min="0" class="form-control" id="precio_online" name="precio_online" value="{{ $item->price_promo }}" aria-describedby="precio online" required>
                                                                 </div>
                                                                 <div class="row">
                                                                     <div class="col-6">
                                                                         <div class="form-group col-12 text-left">
                                                                             <p><b>Portada</b></p>
-                                                                            @foreach ($item->fotos->where('estado','1') as $foto)
-                                                                                @if (Storage::disk('comunidades')->has($foto->imagen))
+                                                                            @foreach ($item->photos->where('state','1') as $foto)
+                                                                                @if (Storage::disk('product')->has($foto->photo))
                                                                                     <figure class="figure m-3" id="{{ $item->id.'_'.$foto->id }}">
-                                                                                        <img src="{{ route('comunidad_editar_imagen_path',$foto->imagen) }}" class="figure-img rounded" alt="A generic" width="200px" height="200px">
+                                                                                        <img src="{{ route('product_editar_imagen_path',$foto->photo) }}" class="figure-img rounded" alt="{{ $foto->photo}}" width="150px" height="150px">
                                                                                         <figcaption class="figure-caption text-right mt-0">
                                                                                             <a href="#!" class="btn btn-danger btn btn-block" onclick="borrar_foto_cliente('{{ $item->id.'_'.$foto->id }}')">
                                                                                                 <i class="fas fa-trash-alt"></i>
@@ -140,11 +133,11 @@
                                                                             @endforeach
                                                                         </div>
                                                                         <div class="form-group col-12">
-                                                                            <label for="foto">Foto</label>
+                                                                            <label for="foto">Foto <span class="text-primary">(150x150px)</span></label>
                                                                             <input type="file" name="portada_f" class="form-control">
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-6">
+                                                                    {{-- <div class="col-6">
                                                                         <div class="form-group col-12 text-left">
                                                                             <p><b>Miniatura</b></p>
                                                                             @foreach ($item->fotos->where('estado','2') as $foto)
@@ -165,14 +158,14 @@
                                                                             <label for="foto">Foto</label>
                                                                             <input type="file" name="miniatura_f" class="form-control">
                                                                         </div>
-                                                                    </div>
+                                                                    </div> --}}
                                                                     <div class="col-12">
                                                                         <div class="form-group col-12 text-left">
                                                                             <p><b>Galeria de fotos</b></p>
-                                                                            @foreach ($item->fotos->where('estado','0') as $foto)
-                                                                                @if (Storage::disk('comunidades')->has($foto->imagen))
+                                                                            @foreach ($item->photos->where('state','0') as $foto)
+                                                                                @if (Storage::disk('product')->has($foto->photo))
                                                                                     <figure class="figure m-3" id="{{ $item->id.'_'.$foto->id }}">
-                                                                                        <img src="{{ route('comunidad_editar_imagen_path',$foto->imagen) }}" class="figure-img rounded" alt="A generic" width="200px" height="200px">
+                                                                                        <img src="{{ route('product_editar_imagen_path',$foto->photo) }}" class="figure-img rounded" alt="{{ $foto->photo }}" width="300px" height="300px">
                                                                                         <figcaption class="figure-caption text-right mt-0">
                                                                                             <a href="#!" class="btn btn-danger btn btn-block" onclick="borrar_foto_cliente('{{ $item->id.'_'.$foto->id }}')">
                                                                                                 <i class="fas fa-trash-alt"></i>
@@ -184,7 +177,7 @@
                                                                             @endforeach
                                                                         </div>
                                                                         <div class="form-group col-12">
-                                                                            <label for="foto">Foto</label>
+                                                                            <label for="foto">Foto <span class="text-primary">(300x300px)</span></label>
                                                                             <input type="file" name="foto[]" multiple class="form-control">
                                                                         </div>
                                                                     </div>
@@ -202,7 +195,7 @@
                                                 </form>
                                             </div>
                                             </div>
-                                            <a href="#" class="btn btn-danger" onclick="eliminar('{{ $item->id }}')"><i class="fas fa-trash-alt"></i></a>
+                                            <a href="#" class="btn btn-danger" onclick="eliminar_producto_('{{ $item->id }}')"><i class="fas fa-trash-alt"></i></a>
                                         </td>
                                     </tr>
                                     @php

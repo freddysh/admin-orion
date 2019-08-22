@@ -146,6 +146,11 @@ Route::get('/admin/producto/delete/{id}', [
     'uses' => 'ProductController@getDelete',
     'as' => 'product.lista.delete',
 ]);
+Route::get('/admin/producto/mostrar-pagina/{grupo_id}/{estado}', [
+    'uses' => 'ProductController@mostrar_pagina',
+    'as' => 'product.mostrar.pagina',
+]);
+
 
 
 

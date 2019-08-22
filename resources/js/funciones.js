@@ -74,11 +74,11 @@ function borrar_foto_asociacion(id){
 
 }
 
-function eliminar(id){
+function eliminar_producto_(id){
 
     Swal.fire({
         title: 'MENSAJE DEL SISTEMA',
-        text: "¿Estas seguro de borrar la comunidad?",
+        text: "¿Estas seguro de borrar el producto?",
         type: 'question',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -94,21 +94,21 @@ function eliminar(id){
             });
             $.ajax({
                 type:'get',
-                url:'/admin/comunidad/delete/'+id,
+                url:'/admin/producto/delete/'+id,
                 // data:{id:id},
                 success:function(data){
                     if(data==1){
                         Swal.fire(
                             'Borrado!',
-                            'La comunidad ha sido borrada.',
+                            'El producto ha sido borrado.',
                             'success'
                         );
-                        $('#row_lista_comunidades_'+id).remove();
+                        $('#row_lista_productos_'+id).remove();
                     }
                     else if(data==0){
                         Swal.fire(
                             'Error!',
-                            'Hubo un error al borrar la comunidad.',
+                            'Hubo un error al borrar el producto.',
                             'danger'
                         )
                     }
@@ -1375,7 +1375,7 @@ function mostrar_pagina(grupo_id,estado){
     });
     $.ajax({
         type:'get',
-        url:'/admin/comunidad/mostrar-pagina/'+grupo_id+'/'+estado,
+        url:'/admin/producto/mostrar-pagina/'+grupo_id+'/'+estado,
         // data:{id:id},
         success:function(data){
             console.log(data);
