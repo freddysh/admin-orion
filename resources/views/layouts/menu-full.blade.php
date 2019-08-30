@@ -88,6 +88,7 @@
     </li>
         <ul class="sub-menu collapse menu2 @if(
             (url()->current()==route('reserva.lista')||url()->current()==route('reserva.detalle',[$reserva_id]))||
+            (url()->current()==route('ordenes.lista',[$f1,$f2])||url()->current()==route('ordenes.post.lista'))||
             (url()->current()==route('operaciones.lista',[$f1,$f2])||url()->current()==route('operaciones.post.lista'))||
             (url()->current()==route('encuesta.lista')||url()->current()==route('encuesta.detalle',[$reserva_id]))
             ) show @endif" id="reservas">
@@ -95,6 +96,9 @@
             <a class="@if(url()->current()==route('reserva.lista')||url()->current()==route('reserva.detalle',[$reserva_id])) active @endif" href="{{route('reserva.lista')}}">RESERVAS</a>
             </li>
             @if(Auth::user()->hasRole('admin'))
+                <li data-toggle="collapse" class="active1">
+                <a class="@if(url()->current()==route('ordenes.lista',[$f1,$f2])||url()->current()==route('ordenes.post.lista')) active @endif" href="{{route('ordenes.lista',[$f1,$f2])}}">ORDENES</a>
+                </li>
                 <li data-toggle="collapse" class="active1">
                 <a class="@if(url()->current()==route('operaciones.lista',[$f1,$f2])||url()->current()==route('operaciones.post.lista')) active @endif" href="{{route('operaciones.lista',[$f1,$f2])}}">OPERACIONES</a>
                 </li>

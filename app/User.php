@@ -65,4 +65,9 @@ class User extends Authenticatable
         return false;
     }
 
+    public function ordes()
+    {
+        return $this->belongsTo(Order::class, 'user_id');
+    }
+
 }
