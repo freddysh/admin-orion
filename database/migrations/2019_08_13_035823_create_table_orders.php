@@ -15,7 +15,6 @@ class CreateTableOrders extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->decimal('total', 8, 2)->comment('total de la orden');
             $table->string('full_name',200)->comment('nombre del cliente');
             $table->string('email',200)->unique()->comment('email del cliente');
             $table->string('phone',20)->comment('nro del telefono o celular del cliente');

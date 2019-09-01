@@ -35,6 +35,11 @@
       $asociacion_id=1;
   @endphp
 @endif
+@if (!isset($order_id))
+  @php
+      $order_id=1;
+  @endphp
+@endif
 
 <div class="menu-list text-12">
 
@@ -88,7 +93,7 @@
     </li>
         <ul class="sub-menu collapse menu2 @if(
             (url()->current()==route('reserva.lista')||url()->current()==route('reserva.detalle',[$reserva_id]))||
-            (url()->current()==route('ordenes.lista',[$f1,$f2])||url()->current()==route('ordenes.post.lista'))||
+            (url()->current()==route('ordenes.lista',[$f1,$f2])||url()->current()==route('reserva.detalle',[$order_id]))||
             (url()->current()==route('operaciones.lista',[$f1,$f2])||url()->current()==route('operaciones.post.lista'))||
             (url()->current()==route('encuesta.lista')||url()->current()==route('encuesta.detalle',[$reserva_id]))
             ) show @endif" id="reservas">

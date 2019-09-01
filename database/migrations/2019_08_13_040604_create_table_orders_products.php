@@ -18,7 +18,6 @@ class CreateTableOrdersProducts extends Migration
             $table->integer('quality')->default('0')->comment('cantidad escojida');
             $table->integer('product_id')->unsigned()->comment('producto escojido');
             $table->decimal('pu', 8, 2)->comment('precio unitario del producto');
-            $table->decimal('total', 8, 2)->comment('total del producto');
             $table->integer('order_id')->unsigned()->comment('orden al que pertenece');
             $table->timestamps();
             // $table->primary('id')->comment('asignamos atributo de clave primaria');

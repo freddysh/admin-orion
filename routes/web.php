@@ -152,11 +152,15 @@ Route::get('/admin/producto/mostrar-pagina/{grupo_id}/{estado}', [
 ]);
 // rutas poara ordenes
 Route::get('/admin/ordenes/{f1}/{f2}', [
-    'uses' => 'OrdenesController@lista',
+    'uses' => 'OrdersController@lista',
     'as' => 'ordenes.lista',
 ]);
+Route::get('/admin/ordenes/{id}', [
+    'uses' => 'OrdersController@detalle',
+    'as' => 'ordenes.detalle',
+]);
 Route::post('/admin/ordenes/', [
-    'uses' => 'OrdenesController@lista_post',
+    'uses' => 'OrdersController@lista_post',
     'as' => 'ordenes.post.lista',
 ]);
 
