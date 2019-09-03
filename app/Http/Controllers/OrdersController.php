@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\OrderProduct;
+use App\Product;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller
@@ -25,6 +27,30 @@ class OrdersController extends Controller
     }
     public function detalle($order_id){
         $order=Order::findOrFail($order_id);
-        return view('admin.order.detalle',compact('order'));
+        $products_list=Product::get();
+        return view('admin.order.detalle',compact('order','products_list'));
+    }
+    public function habilitar(Request $request){
+        $order_product_id=$request->input('order_product_id');
+        $state=$request->input('state');
+        $orderProduct=OrderProduct ::findOrFail($order_product_id);
+        $orderProduct->state=$state;
+        $orderProduct->save();
+    }
+    public function acciones(Request $request){
+        $accion=$request->input('accion');
+        $id=$request->input('id');
+        $order=Order::find($id);
+        if($accion=='DESPACHAR'){
+            $order->state=2;
+        }
+        elseif($accion=='PROCESAR'){
+            $order->state=3;
+        }
+        elseif($accion=='CANCELAR'){
+            $order->state=0;
+        }
+        $order->save();
+        return redirect()->route('ordenes.detalle',$id);
     }
 }

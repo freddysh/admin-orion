@@ -163,7 +163,14 @@ Route::post('/admin/ordenes/', [
     'uses' => 'OrdersController@lista_post',
     'as' => 'ordenes.post.lista',
 ]);
-
+Route::post('/admin/ordenes/editar/habilitar', [
+    'uses' => 'OrdersController@habilitar',
+    'as' => 'ordenes.editar_orden_product',
+]);
+Route::post('/admin/ordenes/acciones', [
+    'uses' => 'OrdersController@acciones',
+    'as' => 'ordenes.acciones_orden_product',
+]);
 
 
 
