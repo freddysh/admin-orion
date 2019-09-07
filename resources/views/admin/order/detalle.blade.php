@@ -107,46 +107,48 @@
                                             </td>
                                             <td class="text-right">{{ number_format($order_product->quality*$order_product->pu,2)}}</td>
                                             <td>
-                                                <input id="toggle-event_{{ $order_product->id }}" type="checkbox" @if($order_product->state==1) checked @endif data-toggle="toggle" data-on="<i class='fas fa-check-circle'></i>" data-off="<i class='fas fa-times-circle'></i>" data-onstyle="success" data-offstyle="danger" value="{{ number_format($order_product->quality*$order_product->pu,2) }}">
-                                                <div class="d-none" id="console-event_{{ $order_product->id }}"></div>
-                                                <script>
-                                                $(function() {
-                                                    $('#toggle-event_{{ $order_product->id }}').change(function() {
-                                                    $('#console-event_{{ $order_product->id }}').html('Toggle: ' + $(this).prop('checked'))
-                                                    var valor=0;
-                                                    var precio=0;
-                                                    var sub_total=parseFloat($('#sub_total').html());
-                                                    var total_header=parseFloat($('#total_header').html());
-                                                    precio=parseFloat($(this).val());
-                                                    if($(this).prop('checked')){
-                                                        valor=1;
-                                                        sub_total+=precio;
-                                                        total_header+=precio;
-                                                    }
-                                                    else{
-                                                        sub_total-=precio;
-                                                        total_header-=precio;
-                                                    }
-                                                    var order_product_id={{ $order_product->id }}
-                                                    $.ajaxSetup({
-                                                        headers: {
-                                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                @if ($order->state==1||$order->state==2)
+                                                    <input id="toggle-event_{{ $order_product->id }}" type="checkbox" @if($order_product->state==1) checked @endif data-toggle="toggle" data-on="<i class='fas fa-check-circle'></i>" data-off="<i class='fas fa-times-circle'></i>" data-onstyle="success" data-offstyle="danger" value="{{ number_format($order_product->quality*$order_product->pu,2) }}">
+                                                    <div class="d-none" id="console-event_{{ $order_product->id }}"></div>
+                                                    <script>
+                                                    $(function() {
+                                                        $('#toggle-event_{{ $order_product->id }}').change(function() {
+                                                        $('#console-event_{{ $order_product->id }}').html('Toggle: ' + $(this).prop('checked'))
+                                                        var valor=0;
+                                                        var precio=0;
+                                                        var sub_total=parseFloat($('#sub_total').html());
+                                                        var total_header=parseFloat($('#total_header').html());
+                                                        precio=parseFloat($(this).val());
+                                                        if($(this).prop('checked')){
+                                                            valor=1;
+                                                            sub_total+=precio;
+                                                            total_header+=precio;
                                                         }
-                                                    });
-                                                    $.ajax({
-                                                    type:'POST',
-                                                    url:"{{ route('ordenes.editar_orden_product') }}",
-                                                    data:{order_product_id:order_product_id,state:valor},
-                                                    success:function(data){
-                                                        console.log('data:'+data);
-                                                        $('#total_header').html(total_header);
-                                                        $('#sub_total').html(sub_total);
-                                                        $('#total_foot').html(total_header);
-                                                    }
-                                                    });
+                                                        else{
+                                                            sub_total-=precio;
+                                                            total_header-=precio;
+                                                        }
+                                                        var order_product_id={{ $order_product->id }}
+                                                        $.ajaxSetup({
+                                                            headers: {
+                                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                            }
+                                                        });
+                                                        $.ajax({
+                                                        type:'POST',
+                                                        url:"{{ route('ordenes.editar_orden_product') }}",
+                                                        data:{order_product_id:order_product_id,state:valor},
+                                                        success:function(data){
+                                                            console.log('data:'+data);
+                                                            $('#total_header').html(total_header);
+                                                            $('#sub_total').html(sub_total);
+                                                            $('#total_foot').html(total_header);
+                                                        }
+                                                        });
+                                                        })
                                                     })
-                                                })
-                                                </script>
+                                                    </script>
+                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach

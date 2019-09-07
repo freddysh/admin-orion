@@ -1745,3 +1745,24 @@ function eliminar_proveedor(id,tipo){
         }
       })
 }
+function search_orden(valorcito){
+    console.log(valorcito);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type:'POST',
+            url:'../../order/get-order',
+            data:{valor:valorcito},
+            beforeSend: function() {
+                $("#rpt").html('');
+                $('#rpt').html('<i class="fas fa-stroopwafel fa-spin fa-3x"></i>');
+            },
+            success:function(data){
+                $("#rpt").html('');
+                $("#rpt").html(data);
+            }
+        });
+    }

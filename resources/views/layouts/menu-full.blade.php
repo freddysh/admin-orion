@@ -40,7 +40,13 @@
       $order_id=1;
   @endphp
 @endif
-
+@if (!isset($anio))
+  @php
+      $fecha=new Carbon();
+      $fecha->subHour(5);
+      $anio=$fecha->format('Y');
+  @endphp
+@endif
 <div class="menu-list text-12">
 
   <ul id="menu-content" class="menu-content collapsed menu1 sidebar-nav">
@@ -89,7 +95,7 @@
     @endif
     {{-- rutas para la base de datos --}}
     <li data-toggle="collapse" data-target="#reservas" class="collapsed">
-      <a href="#" class="bg-danger text-white"><i class="fas fa-swatchbook"></i> RESERVAS </a>
+      <a href="#" class="bg-danger text-white"><i class="fas fa-swatchbook"></i> VENTAS </a>
     </li>
         <ul class="sub-menu collapse menu2 @if(
             (url()->current()==route('reserva.lista')||url()->current()==route('reserva.detalle',[$reserva_id]))||
@@ -97,23 +103,15 @@
             (url()->current()==route('operaciones.lista',[$f1,$f2])||url()->current()==route('operaciones.post.lista'))||
             (url()->current()==route('encuesta.lista')||url()->current()==route('encuesta.detalle',[$reserva_id]))
             ) show @endif" id="reservas">
-            <li data-toggle="collapse" class="active1">
-            <a class="@if(url()->current()==route('reserva.lista')||url()->current()==route('reserva.detalle',[$reserva_id])) active @endif" href="{{route('reserva.lista')}}">RESERVAS</a>
-            </li>
-            @if(Auth::user()->hasRole('admin'))
                 <li data-toggle="collapse" class="active1">
-                <a class="@if(url()->current()==route('ordenes.lista',[$f1,$f2])||url()->current()==route('ordenes.post.lista')) active @endif" href="{{route('ordenes.lista',[$f1,$f2])}}">ORDENES</a>
+                <a class="@if(url()->current()==route('ordenes.lista')||url()->current()==route('ordenes.post.lista')) active @endif" href="{{route('ordenes.lista')}}">ORDENES</a>
                 </li>
                 <li data-toggle="collapse" class="active1">
-                <a class="@if(url()->current()==route('operaciones.lista',[$f1,$f2])||url()->current()==route('operaciones.post.lista')) active @endif" href="{{route('operaciones.lista',[$f1,$f2])}}">OPERACIONES</a>
+                    <a class="@if(url()->current()==route('ordenes.lista.report',[$f1,$f2])||url()->current()==route('ordenes.post.lista')) active @endif" href="{{route('ordenes.lista.report',[$f1,$f2])}}">REPORTE DE VENTAS</a>
                 </li>
                 <li data-toggle="collapse" class="active1">
-                    <a class="@if(url()->current()==route('encuesta.lista')||url()->current()==route('encuesta.detalle',[$reserva_id])) active @endif" href="{{route('encuesta.lista')}}">ENCUESTAS</a>
-                    </li>
-                {{--  <li data-toggle="collapse" class="active1">
-                    <a class="@if(url()->current()==route('encuesta.lista')||url()->current()==route('encuesta.detalle',[$encuesta_id])) active @endif" href="{{route('encuesta.lista')}}">ENCUESTAS</a>
-                </li>  --}}
-            @endif
+                    <a class="@if(url()->current()==route('ordenes.lista.report.grafica',$anio)||url()->current()==route('ordenes.post.lista')) active @endif" href="{{route('ordenes.lista.report.grafica',$anio)}}">GRAFICA DE VENTAS</a>
+                </li>
         </ul>
   </ul>
 </div>

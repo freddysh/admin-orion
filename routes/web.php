@@ -151,7 +151,7 @@ Route::get('/admin/producto/mostrar-pagina/{grupo_id}/{estado}', [
     'as' => 'product.mostrar.pagina',
 ]);
 // rutas poara ordenes
-Route::get('/admin/ordenes/{f1}/{f2}', [
+Route::get('/admin/ordenes', [
     'uses' => 'OrdersController@lista',
     'as' => 'ordenes.lista',
 ]);
@@ -171,11 +171,25 @@ Route::post('/admin/ordenes/acciones', [
     'uses' => 'OrdersController@acciones',
     'as' => 'ordenes.acciones_orden_product',
 ]);
+Route::post('/admin/order/get-order', [
+    'uses' => 'OrdersController@getorder',
+    'as' => 'order.get',
+]);
 
 
+Route::get('/admin/ordenes/report/{f1}/{f2}', [
+    'uses' => 'OrdersController@lista_report',
+    'as' => 'ordenes.lista.report',
+]);
 
-
-
+Route::post('/admin/ordenes/report', [
+    'uses' => 'OrdersController@lista_report_post',
+    'as' => 'ordenes.lista.post.report',
+]);
+Route::get('/admin/ordenes/report/grafica/lineal/{anio}', [
+    'uses' => 'OrdersController@lista_report_grafica',
+    'as' => 'ordenes.lista.report.grafica',
+]);
 
 
 
