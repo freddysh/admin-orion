@@ -1746,23 +1746,35 @@ function eliminar_proveedor(id,tipo){
       })
 }
 function search_orden(valorcito){
-    console.log(valorcito);
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            type:'POST',
-            url:'../../order/get-order',
-            data:{valor:valorcito},
-            beforeSend: function() {
-                $("#rpt").html('');
-                $('#rpt').html('<i class="fas fa-stroopwafel fa-spin fa-3x"></i>');
-            },
-            success:function(data){
-                $("#rpt").html('');
-                $("#rpt").html(data);
-            }
-        });
+console.log(valorcito);
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        type:'POST',
+        url:'order/get-order',
+        data:{valor:valorcito},
+        beforeSend: function() {
+            $("#rpt").html('');
+            $('#rpt').html('<i class="fas fa-stroopwafel fa-spin fa-3x"></i>');
+        },
+        success:function(data){
+            $("#rpt").html('');
+            $("#rpt").html(data);
+        }
+    });
+}
+function mostrar_filtro_report_grafica(opcion){
+console.log(opcion);
+    $('#f_anio_mes').addClass('d-none');
+    $('#f_anio').addClass('d-none');
+    if(opcion=="Por-anio"){
+        $('#f_anio').removeClass('d-none');
     }
+    else{
+        $('#f_anio_mes').removeClass('d-none');
+    }
+
+}

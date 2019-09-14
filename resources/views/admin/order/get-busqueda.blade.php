@@ -160,7 +160,7 @@ use Carbon\Carbon;
                             $total_soles+=$product->quality*$product->pu;
                         @endphp
                     @endforeach
-                    @if ($nroDias<=7)
+
                         <div class="row reserva-caja">
                             <div class="col-9 px-1 text-left">
                                 <a href="{{ route('ordenes.detalle',$item->id) }}" class=" text-decoration-none text-15">
@@ -186,7 +186,6 @@ use Carbon\Carbon;
                                 Hace {{ $nroDiasOrdenado }} dias
                             </div>
                         </div>
-                    @endif
                 @endforeach
             </div>
         </div>

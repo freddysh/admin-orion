@@ -15,7 +15,7 @@ class AddColumnUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
-            $table->string('password2')->after('password')->comment('contraseña sin cifrado');
+            $table->string('password2')->after('password')->nullable()->comment('contraseña sin cifrado');
         });
     }
 
