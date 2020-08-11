@@ -33,6 +33,6 @@
     "codemirror": "^5.48.0",
     "cross-env": "^5.2.1",
     "grunt": "^1.0.4",
-    "tinymce": "^5.0.8"
+    "tinymce": "^5.4.0"
   }
 }
